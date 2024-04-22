@@ -31,6 +31,10 @@ resizeButton.addEventListener('click', function () {
 })
 
 
+const eraseButton = document.querySelector("#eraser");
+eraseButton.addEventListener('click', erase)
+
+
 let initialGridSize = 16;
 buildGrid(initialGridSize);
 
@@ -61,3 +65,15 @@ function removeGrid() {
     }
 }
 
+//eraser function
+//if a div name is set to etch, change mouseover event
+
+function erase() {
+    let etchList = document.querySelectorAll(".etch");
+    //console.log(typeof(etchList));
+    for (let square of etchList) {
+        square.addEventListener('mouseover', function () {
+            square.style.backgroundColor = "rgb(255, 248, 220)";
+        })
+    }
+}
