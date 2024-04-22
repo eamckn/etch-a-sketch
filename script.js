@@ -65,15 +65,28 @@ function removeGrid() {
     }
 }
 
-//eraser function
-//if a div name is set to etch, change mouseover event
-
 function erase() {
-    let etchList = document.querySelectorAll(".etch");
-    //console.log(typeof(etchList));
-    for (let square of etchList) {
-        square.addEventListener('mouseover', function () {
-            square.style.backgroundColor = "rgb(255, 248, 220)";
-        })
+    if (eraseButton.classList.contains("clicked") === false) {
+        let etchList = document.querySelectorAll(".etch");
+        //console.log(typeof(etchList));
+        for (let square of etchList) {
+            square.addEventListener('mouseover', function () {
+                square.style.backgroundColor = "rgb(255, 248, 220)";
+            })
+        }
+        eraseButton.textContent = "Draw";
+        eraseButton.classList.add("clicked");
     }
+    else {
+        let etchList = document.querySelectorAll(".etch");
+        //console.log(typeof(etchList));
+        for (let square of etchList) {
+            square.addEventListener('mouseover', function () {
+                square.style.backgroundColor = "black";
+            })
+        }
+        eraseButton.textContent = "Erase";
+        eraseButton.classList.remove("clicked");
+    }
+    //if button has been clicked, make it black again
 }
