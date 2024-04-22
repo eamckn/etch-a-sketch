@@ -13,7 +13,11 @@ const containerWidth = container.offsetWidth;
 //console.log(containerWidth)
 const containerHeight = container.offsetHeight;
 //console.log(containerHeight)
+
+const resizeButton = document.querySelector("#resize");
+
 let initialGridSize = 16;
+buildGrid(initialGridSize);
 
 function buildGrid(gridSize) {
     for (let row = 0; row < gridSize; row++) {
@@ -41,12 +45,16 @@ function removeGrid() {
     }
 }
 
-const resizeButton = document.querySelector("#resize");
-
 resizeButton.addEventListener('click', function () {
-    let gridSize = Number(prompt("Please enter a number desgnating your desired grid width and height"))
+    let gridSize = Number(prompt("Please enter a number desgnating your desired grid width and height:"))
+    console.log(gridSize)
+    while (gridSize > 99) {
+        gridSize = Number(prompt("Grid sizes for 100 and above are not supported. Please enter another number:"))
+    }
+    while (isNaN(gridSize)) {
+        gridSize = Number(prompt("ERROR: Non-number value given. Please enter a valid number:"))
+    }
+    console.log(gridSize);
     removeGrid();
     buildGrid(gridSize);
 })
-
-buildGrid(initialGridSize);
