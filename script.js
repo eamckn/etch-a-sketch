@@ -63,12 +63,15 @@ function removeGrid() {
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
+    eraseButton.textContent = "Erase";
+    if (eraseButton.classList.contains("clicked")) {
+        eraseButton.classList.remove("clicked");
+    }
 }
 
 function erase() {
     if (eraseButton.classList.contains("clicked") === false) {
         let etchList = document.querySelectorAll(".etch");
-        //console.log(typeof(etchList));
         for (let square of etchList) {
             square.addEventListener('mouseover', function () {
                 square.style.backgroundColor = "rgb(255, 248, 220)";
@@ -79,7 +82,6 @@ function erase() {
     }
     else {
         let etchList = document.querySelectorAll(".etch");
-        //console.log(typeof(etchList));
         for (let square of etchList) {
             square.addEventListener('mouseover', function () {
                 square.style.backgroundColor = "black";
@@ -88,5 +90,4 @@ function erase() {
         eraseButton.textContent = "Erase";
         eraseButton.classList.remove("clicked");
     }
-    //if button has been clicked, make it black again
 }
