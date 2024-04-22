@@ -32,7 +32,10 @@ resizeButton.addEventListener('click', function () {
 
 
 const eraseButton = document.querySelector("#eraser");
-eraseButton.addEventListener('click', erase)
+eraseButton.addEventListener('click', erase);
+
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener('click', clearGrid);
 
 
 let initialGridSize = 16;
@@ -63,8 +66,8 @@ function removeGrid() {
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
-    eraseButton.textContent = "Erase";
     if (eraseButton.classList.contains("clicked")) {
+        eraseButton.textContent = "Erase";
         eraseButton.classList.remove("clicked");
     }
 }
@@ -85,6 +88,22 @@ function erase() {
         for (let square of etchList) {
             square.addEventListener('mouseover', function () {
                 square.style.backgroundColor = "black";
+            })
+        }
+        eraseButton.textContent = "Erase";
+        eraseButton.classList.remove("clicked");
+    }
+}
+
+function clearGrid() {
+    let etchList = document.querySelectorAll(".etch");
+    for (let square of etchList) {
+        square.style.backgroundColor = "rgb(255, 248, 220)";
+    }
+    if (eraseButton.classList.contains("clicked")) {
+        for (let item of etchList) {
+            item.addEventListener('mouseover', function () {
+                item.style.backgroundColor = "black";
             })
         }
         eraseButton.textContent = "Erase";
