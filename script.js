@@ -2,46 +2,59 @@
 
 // External JavaScript for etch-a-sketch
 
-
-// first, let's make sure we can correct create a div
-
-// it worked!
+const BLANK_BACKGROUND = "rgb(255, 248, 220)";
 
 
 const container = document.querySelector("#container");
 const containerWidth = container.offsetWidth;
-//console.log(containerWidth)
 const containerHeight = container.offsetHeight;
-//console.log(containerHeight)
+
+const eraseButton = document.querySelector("#eraser");
+eraseButton.addEventListener('click', erase);
+
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener('click', resetGrid);
+
+let initialGridSize = 16;
+buildGrid(initialGridSize);
 
 
 const resizeButton = document.querySelector("#resize");
 resizeButton.addEventListener('click', function () {
     let gridSize = Number(prompt("Please enter a number desgnating your desired grid width and height:"))
-    console.log(gridSize)
     while (gridSize > 99) {
         gridSize = Number(prompt("Grid sizes for 100 and above are not supported. Please enter another number:"))
     }
     while (isNaN(gridSize)) {
         gridSize = Number(prompt("ERROR: Non-number value given. Please enter a valid number:"))
     }
-    console.log(gridSize);
     removeGrid();
     buildGrid(gridSize);
 })
 
 
-const eraseButton = document.querySelector("#eraser");
-eraseButton.addEventListener('click', erase);
+function removeGrid() {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+    if (eraseButton.classList.contains("clicked")) {
+        resetEraser();
+    }
+}
 
-const clearButton = document.querySelector("#clear");
-clearButton.addEventListener('click', clearGrid);
+function resetEraser() {
+    eraseButton.textContent = "Erase";
+    eraseButton.classList.remove("clicked");
+}
 
+function drawBlack(event) {
+    event.target.style.backgroundColor = 'black';
+}
 
-let initialGridSize = 16;
-buildGrid(initialGridSize);
-
-
+function drawEmpty(event) {
+    event.target.style.backgroundColor = BLANK_BACKGROUND;
+}
+ 
 function buildGrid(gridSize) {
     for (let row = 0; row < gridSize; row++) {
         for (let col = 0; col < gridSize; col++) {
@@ -54,59 +67,62 @@ function buildGrid(gridSize) {
             //console.log(newDiv.style.height);
             //newDiv.textContent = "x"
             newDiv.className = "etch";
-            newDiv.addEventListener('mouseover', function () {
-                newDiv.style.backgroundColor = 'black';
-            })
+            newDiv.addEventListener('mouseover', drawBlack)
             container.appendChild(newDiv);
         }
     }
 }
 
-function removeGrid() {
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-    if (eraseButton.classList.contains("clicked")) {
-        eraseButton.textContent = "Erase";
-        eraseButton.classList.remove("clicked");
-    }
-}
-
 function erase() {
+
+    let etchList = document.querySelectorAll(".etch");
+
     if (eraseButton.classList.contains("clicked") === false) {
-        let etchList = document.querySelectorAll(".etch");
         for (let square of etchList) {
-            square.addEventListener('mouseover', function () {
-                square.style.backgroundColor = "rgb(255, 248, 220)";
-            })
+            square.addEventListener('mouseover', drawEmpty)
         }
         eraseButton.textContent = "Draw";
         eraseButton.classList.add("clicked");
     }
     else {
-        let etchList = document.querySelectorAll(".etch");
         for (let square of etchList) {
-            square.addEventListener('mouseover', function () {
-                square.style.backgroundColor = "black";
-            })
+            square.removeEventListener('mouseover', drawEmpty);
+            square.addEventListener('mouseover', drawBlack);
         }
-        eraseButton.textContent = "Erase";
-        eraseButton.classList.remove("clicked");
+        resetEraser();
     }
 }
 
-function clearGrid() {
+function resetGrid() {
     let etchList = document.querySelectorAll(".etch");
     for (let square of etchList) {
-        square.style.backgroundColor = "rgb(255, 248, 220)";
-    }
-    if (eraseButton.classList.contains("clicked")) {
-        for (let item of etchList) {
-            item.addEventListener('mouseover', function () {
-                item.style.backgroundColor = "black";
-            })
+        square.style.backgroundColor = BLANK_BACKGROUND;
+        if (eraseButton.classList.contains("clicked")) {
+                square.removeEventListener('mouseover', drawEmpty);
+                square.addEventListener('mouseover', drawBlack);
+            }
         }
-        eraseButton.textContent = "Erase";
-        eraseButton.classList.remove("clicked");
+    resetEraser();
     }
+
+const rainbowButton = document.querySelector("#rainbow");
+rainbowButton.addEventListener('click', randomizeColor);
+
+function randomizeColor() {
+    let etchList = document.querySelectorAll(".etch");
+    for (let square of etchList) {
+
+        square.removeEventListener('mouseover', drawBlack)
+
+        let randomRedValue = Math.floor(Math.random() * 255);
+        let randomGreenValue = Math.floor(Math.random() * 255);
+        let randomBlueValue = Math.floor(Math.random() * 255);
+
+        square.addEventListener('mouseover', function () {
+            if (square.style.backgroundColor !== "black") {
+                square.style.backgroundColor = `rgb(${randomRedValue}, ${randomGreenValue}, ${randomBlueValue})`;
+            }
+        })
+    }
+    resetEraser();
 }
