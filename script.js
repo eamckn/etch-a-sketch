@@ -79,7 +79,8 @@ function erase() {
 
     if (eraseButton.classList.contains("clicked") === false) {
         for (let square of etchList) {
-            square.addEventListener('mouseover', drawEmpty)
+            square.removeEventListener('mouseover', drawBlack);
+            square.addEventListener('mouseover', drawEmpty);
         }
         eraseButton.textContent = "Draw";
         eraseButton.classList.add("clicked");
@@ -112,7 +113,8 @@ function randomizeColor() {
     let etchList = document.querySelectorAll(".etch");
     for (let square of etchList) {
 
-        square.removeEventListener('mouseover', drawBlack)
+        square.removeEventListener('mouseover', drawBlack);
+        square.removeEventListener('mouseover', drawEmpty);
 
         let randomRedValue = Math.floor(Math.random() * 255);
         let randomGreenValue = Math.floor(Math.random() * 255);
