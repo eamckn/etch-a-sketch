@@ -49,10 +49,12 @@ function resetEraser() {
 
 function drawBlack(event) {
     event.target.style.backgroundColor = 'black';
+    event.target.style.opacity = 1;
 }
 
 function drawEmpty(event) {
     event.target.style.backgroundColor = BLANK_BACKGROUND;
+    event.target.style.opacity = 1;
 }
  
 function buildGrid(gridSize) {
@@ -98,6 +100,7 @@ function resetGrid() {
     let etchList = document.querySelectorAll(".etch");
     for (let square of etchList) {
         square.style.backgroundColor = BLANK_BACKGROUND;
+        square.style.opacity = 1;
         if (eraseButton.classList.contains("clicked")) {
                 square.removeEventListener('mouseover', drawEmpty);
                 square.addEventListener('mouseover', drawBlack);
@@ -141,6 +144,9 @@ function makeGradient() {
     for (let square of etchList) {
         let opacity = .1;
         square.addEventListener('mouseover', drawGradient(opacity));
+    }
+    if (eraseButton.classList.contains("clicked")) {
+        resetEraser();
     }
 }
 
