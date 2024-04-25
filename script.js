@@ -34,7 +34,7 @@ resizeButton.addEventListener('click', function () {
     buildGrid(gridSize);
 })
 eraseButton.addEventListener('click', erase);
-clearButton.addEventListener('click', resetGrid);
+clearButton.addEventListener('click', clearGrid);
 rainbowButton.addEventListener('click', randomizeColor);
 opacityButton.addEventListener('click', makeGradient);
 
@@ -108,7 +108,7 @@ function erase() {
     }
 }
 
-function resetGrid() {
+function clearGrid() {
 
     let etchList = document.querySelectorAll(".etch");
 
