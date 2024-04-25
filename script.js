@@ -2,24 +2,22 @@
 
 // External JavaScript for etch-a-sketch
 
+// Shorthand constant for etch-a-sketch background rgb values
 const BLANK_BACKGROUND = "rgb(255, 248, 220)";
 
-
+// Initialize DOM Node selectors
 const container = document.querySelector("#container");
+const resizeButton = document.querySelector("#resize");
+const eraseButton = document.querySelector("#eraser");
+const clearButton = document.querySelector("#clear");
+const rainbowButton = document.querySelector("#rainbow");
+const opacityButton = document.querySelector("#opacity");
+
+// Initialize CSS width and height for etch-a-sketch div dimensions
 const containerWidth = container.offsetWidth;
 const containerHeight = container.offsetHeight;
 
-const eraseButton = document.querySelector("#eraser");
-eraseButton.addEventListener('click', erase);
-
-const clearButton = document.querySelector("#clear");
-clearButton.addEventListener('click', resetGrid);
-
-let initialGridSize = 16;
-buildGrid(initialGridSize);
-
-
-const resizeButton = document.querySelector("#resize");
+// Initialize click event listeners for each button
 resizeButton.addEventListener('click', function () {
     let gridSize = Number(prompt("Please enter a number desgnating your desired grid width and height:"))
     while (gridSize > 99) {
@@ -31,7 +29,14 @@ resizeButton.addEventListener('click', function () {
     removeGrid();
     buildGrid(gridSize);
 })
+eraseButton.addEventListener('click', erase);
+clearButton.addEventListener('click', resetGrid);
+rainbowButton.addEventListener('click', randomizeColor);
+opacityButton.addEventListener('click', makeGradient);
 
+// Build the starting etch-a-sketch upon page laod
+let initialGridSize = 16;
+buildGrid(initialGridSize);
 
 function removeGrid() {
     while (container.firstChild) {
@@ -60,14 +65,14 @@ function drawEmpty(event) {
 function buildGrid(gridSize) {
     for (let row = 0; row < gridSize; row++) {
         for (let col = 0; col < gridSize; col++) {
+
             const newDiv = document.createElement("div");
             const newDivWidth = containerWidth/gridSize;
             const newDivHeight = containerHeight/gridSize;
+
             newDiv.style.width = `${newDivWidth}px`;
-            //console.log(newDiv.style.width);
             newDiv.style.height = `${newDivHeight}px`;
-            //console.log(newDiv.style.height);
-            //newDiv.textContent = "x"
+
             newDiv.className = "etch";
             newDiv.addEventListener('mouseover', drawBlack)
             container.appendChild(newDiv);
@@ -97,7 +102,9 @@ function erase() {
 }
 
 function resetGrid() {
+
     let etchList = document.querySelectorAll(".etch");
+
     for (let square of etchList) {
         square.style.backgroundColor = BLANK_BACKGROUND;
         square.style.opacity = 1;
@@ -107,13 +114,12 @@ function resetGrid() {
             }
         }
     resetEraser();
-    }
-
-const rainbowButton = document.querySelector("#rainbow");
-rainbowButton.addEventListener('click', randomizeColor);
+}
 
 function randomizeColor() {
+
     let etchList = document.querySelectorAll(".etch");
+
     for (let square of etchList) {
 
         square.removeEventListener('mouseover', drawBlack);
@@ -132,15 +138,13 @@ function randomizeColor() {
     resetEraser();
 }
 
-const opacityButton = document.querySelector("#opacity");
-opacityButton.addEventListener('click', makeGradient);
-
 // opacity function
 
 // every time mouseover is fired, increase opacity by 10%
 function makeGradient() {
-    //let opacity = .1;
+
     let etchList = document.querySelectorAll(".etch");
+    
     for (let square of etchList) {
         let opacity = .1;
         square.addEventListener('mouseover', drawGradient(opacity));
