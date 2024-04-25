@@ -128,3 +128,28 @@ function randomizeColor() {
     }
     resetEraser();
 }
+
+const opacityButton = document.querySelector("#opacity");
+opacityButton.addEventListener('click', makeGradient);
+
+// opacity function
+
+// every time mouseover is fired, increase opacity by 10%
+function makeGradient() {
+    //let opacity = .1;
+    let etchList = document.querySelectorAll(".etch");
+    for (let square of etchList) {
+        let opacity = .1;
+        square.addEventListener('mouseover', drawGradient(opacity));
+    }
+}
+
+function drawGradient(opacity) {
+    return function (event) {
+        event.target.style.backgroundColor = "black";
+        if (opacity <= 1) {
+            event.target.style.opacity = `${opacity}`;
+            opacity += .1;
+        }
+    }
+}

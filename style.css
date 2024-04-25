@@ -22,7 +22,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    width: 575px;
+    width: 580px;
     height: 70px;
     background-color: red;
     border-radius: 60px 60px 0px 0px;
@@ -36,9 +36,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 575px;
-    height: 575px;
-    background-color: red;
+    width: 500px;
+    height: 500px;
+    background-color: cornsilk;
+    border: 40px solid red;
     border-radius: 0px 0px 35px 35px;
 }
 
