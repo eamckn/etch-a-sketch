@@ -2,8 +2,10 @@
 
 // External JavaScript for etch-a-sketch
 
+
 // Shorthand constant for etch-a-sketch background rgb values
-const BLANK_BACKGROUND = "rgb(255, 248, 220)";
+const BLANK = "rgb(255, 248, 220)";
+
 
 // Initialize DOM Node selectors
 const container = document.querySelector("#container");
@@ -13,9 +15,11 @@ const clearButton = document.querySelector("#clear");
 const rainbowButton = document.querySelector("#rainbow");
 const opacityButton = document.querySelector("#opacity");
 
-// Initialize CSS width and height for etch-a-sketch div dimensions
+
+// Get width and height defined in CSS for etch-a-sketch div dimensions
 const containerWidth = container.offsetWidth;
 const containerHeight = container.offsetHeight;
+
 
 // Initialize click event listeners for each button
 resizeButton.addEventListener('click', function () {
@@ -34,10 +38,13 @@ clearButton.addEventListener('click', resetGrid);
 rainbowButton.addEventListener('click', randomizeColor);
 opacityButton.addEventListener('click', makeGradient);
 
+
 // Build the starting etch-a-sketch upon page laod
 let initialGridSize = 16;
 buildGrid(initialGridSize);
 
+
+// Functions
 function removeGrid() {
     while (container.firstChild) {
         container.removeChild(container.firstChild);
@@ -58,7 +65,7 @@ function drawBlack(event) {
 }
 
 function drawEmpty(event) {
-    event.target.style.backgroundColor = BLANK_BACKGROUND;
+    event.target.style.backgroundColor = BLANK;
     event.target.style.opacity = 1;
 }
  
@@ -106,7 +113,7 @@ function resetGrid() {
     let etchList = document.querySelectorAll(".etch");
 
     for (let square of etchList) {
-        square.style.backgroundColor = BLANK_BACKGROUND;
+        square.style.backgroundColor = BLANK;
         square.style.opacity = 1;
         if (eraseButton.classList.contains("clicked")) {
                 square.removeEventListener('mouseover', drawEmpty);
@@ -144,7 +151,7 @@ function randomizeColor() {
 function makeGradient() {
 
     let etchList = document.querySelectorAll(".etch");
-    
+
     for (let square of etchList) {
         let opacity = .1;
         square.addEventListener('mouseover', drawGradient(opacity));
