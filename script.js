@@ -103,11 +103,11 @@ function erase() {
 
     // If we aren't yet erasing
     if (eraseButton.classList.contains("clicked") === false) {
+        // Communicate that we're on the erasing function
         for (let square of etchList) {
             square.removeEventListener('mouseover', drawBlack);
             square.addEventListener('mouseover', drawEmpty);
         }
-        // Communicate that we're on the erasing function
         eraseButton.textContent = "Draw";
         eraseButton.classList.add("clicked");
     }
@@ -122,27 +122,13 @@ function erase() {
     }
 }
 
-// TURN THIS INTO SOMETHING THAT JUST CLEARS AND REBUILDS WITH CURRENT SIZE
-// THIS WILL RESET EVENT LISTENERS AND MAKE SYNCHRONICITY OF DRAW FUNCTIONS EASIER
-// TO MANAGE/COMBINE
+// Wipe and rebuild grid with current working grid size
 function clearGrid() {
 
-    let etchList = document.querySelectorAll(".etch");
-
-    for (let square of etchList) {
-        square.style.backgroundColor = BLANK;
-        square.style.opacity = 1;
-        if (eraseButton.classList.contains("clicked")) {
-            square.removeEventListener('mouseover', drawEmpty);
-            square.addEventListener('mouseover', drawBlack);
-        }
-    }
+    removeGrid();
+    buildGrid(gridSize);
     resetEraser();
-    if (opacityButton.classList.contains("clicked")) {
-        for (let square of etchList) {
-            square.addEventListener('mouseover', drawGradient(opacity = .1));
-        }
-    }
+
 }
 
 // Make squares a random RGB value
