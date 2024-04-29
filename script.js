@@ -94,6 +94,7 @@ function erase() {
     if (eraseButton.classList.contains("clicked") === false) {
         for (let square of etchList) {
             square.removeEventListener('mouseover', drawBlack);
+            square.removeEventListener('mouseover', drawGradient);
             square.addEventListener('mouseover', drawEmpty);
         }
         eraseButton.textContent = "Draw";
@@ -116,12 +117,13 @@ function clearGrid() {
         square.style.backgroundColor = BLANK;
         square.style.opacity = 1;
         if (eraseButton.classList.contains("clicked")) {
-                square.removeEventListener('mouseover', drawEmpty);
-                square.addEventListener('mouseover', drawBlack);
-            }
+            square.removeEventListener('mouseover', drawEmpty);
+            square.addEventListener('mouseover', drawBlack);
         }
+    }
     resetEraser();
 }
+
 
 function randomizeColor() {
 
@@ -145,23 +147,24 @@ function randomizeColor() {
     resetEraser();
 }
 
-// opacity function
 
-// every time mouseover is fired, increase opacity by 10%
 function makeGradient() {
 
     let etchList = document.querySelectorAll(".etch");
 
     for (let square of etchList) {
-        let opacity = .1;
-        square.addEventListener('mouseover', drawGradient(opacity));
+        square.removeEventListener('mouseover', drawBlack);
+        square.removeEventListener('mouseover', drawEmpty);
+        if (square.style.backgroundColor !== "black") {
+            square.addEventListener('mouseover', drawGradient(opacity = .1));
+        }
     }
     if (eraseButton.classList.contains("clicked")) {
         resetEraser();
     }
 }
 
-function drawGradient(opacity) {
+function drawGradient(opacity = .1) {
     return function (event) {
         event.target.style.backgroundColor = "black";
         if (opacity <= 1) {
