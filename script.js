@@ -32,6 +32,8 @@ resizeButton.addEventListener('click', function () {
     }
     removeGrid();
     buildGrid(gridSize);
+    resetEraser();
+    resetRainbow();
 })
 eraseButton.addEventListener('click', erase);
 clearButton.addEventListener('click', clearGrid);
@@ -128,31 +130,38 @@ function clearGrid() {
     removeGrid();
     buildGrid(gridSize);
     resetEraser();
-
+    resetRainbow();
 }
 
 // Make squares a random RGB value
 function randomizeColor() {
 
-    let etchList = document.querySelectorAll(".etch");
+    if (!rainbowButton.classList.contains("clicked")) {
+        let etchList = document.querySelectorAll(".etch");
 
-    for (let square of etchList) {
-
-        square.removeEventListener('mouseover', drawBlack);
-        square.removeEventListener('mouseover', drawEmpty);
-
-        let randomRedValue = Math.floor(Math.random() * 255);
-        let randomGreenValue = Math.floor(Math.random() * 255);
-        let randomBlueValue = Math.floor(Math.random() * 255);
-
-        square.addEventListener('mouseover', function () {
-            // Prohibit interference with already drawn squares, transparent and opaque
-            if (square.style.backgroundColor !== "black") {
-                square.style.backgroundColor = `rgb(${randomRedValue}, ${randomGreenValue}, ${randomBlueValue})`;
-            }
-        })
+        for (let square of etchList) {
+    
+            square.removeEventListener('mouseover', drawBlack);
+            square.removeEventListener('mouseover', drawEmpty);
+    
+            let randomRedValue = Math.floor(Math.random() * 255);
+            let randomGreenValue = Math.floor(Math.random() * 255);
+            let randomBlueValue = Math.floor(Math.random() * 255);
+    
+            square.addEventListener('mouseover', function () {
+                // Prohibit interference with already drawn squares, transparent and opaque
+                if (square.style.backgroundColor !== "black") {
+                    square.style.backgroundColor = `rgb(${randomRedValue}, ${randomGreenValue}, ${randomBlueValue})`;
+                }
+            })
+        }
+        rainbowButton.classList.add("clicked");
     }
     resetEraser();
+}
+
+function resetRainbow() {
+    rainbowButton.classList.remove("clicked");
 }
 
 function makeGradient() {
